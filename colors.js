@@ -54,4 +54,8 @@ async function run() {
   );
 }
 
-run();
+export const handler = async(event) => {
+  if(event.TYPE === "SET_RANDOM") {
+    return run;
+  }
+};
