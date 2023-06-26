@@ -5,6 +5,7 @@
   "main": "colors.js",
   "scripts": {
     "start": "node colors",
+    "zip": "rm -f build.zip && zip -r build.zip colors.js node_modules package.json package-lock.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ben Schulman",

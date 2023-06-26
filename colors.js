@@ -3,21 +3,32 @@ const axios = require("axios");
 
 const url = "https://news.ycombinator.com/xuser";
 
-async function run() {
+function getRandomColor() {
+  const letters = "0123456789abcdef";
+  let color = "";
 
-  const resp = await axios.post(
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+async function run() {
+  const {
+    HN_HMAC: hmac,
+    HN_USER: id,
+    HN_SESSION_COOKIE: sessionCookie,
+  } = process.env;
+  const topc = getRandomColor();
+
+  console.log(`Changing color to ${topc}.`)
+
+  return axios.post(
     url,
     {
-      id: process.env.HN_USER,
-      hmac: process.env.HN_HMAC,
-      about: "",
-      email: process.env.HN_EMAIL,
-      showd: "no",
-      nopro: "no",
-      maxv: "20",
-      mina: "180",
-      topc: "1fffff", //"d2c7fa",
-      delay: "0",
+      id,
+      hmac,
+      topc,
     },
     {
       headers: {
@@ -29,7 +40,7 @@ async function run() {
         "Content-Type": "application/x-www-form-urlencoded",
         Origin: "https://news.ycombinator.com",
         Connection: "keep-alive",
-        Cookie: process.env.HN_SESSION_COOKIE,
+        Cookie: sessionCookie,
         "Upgrade-Insecure-Requests": "1",
         "Sec-Fetch-Dest": "document",
         "Sec-Fetch-Mode": "navigate",
@@ -41,8 +52,6 @@ async function run() {
       },
     }
   );
-
-  console.log(resp.status);
 }
 
 run();
