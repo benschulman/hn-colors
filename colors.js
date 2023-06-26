@@ -54,8 +54,12 @@ async function run() {
   );
 }
 
-export const handler = async(event) => {
+const handler = async(event) => {
   if(event.TYPE === "SET_RANDOM") {
-    return run;
+    await run();
   }
+
+  return
 };
+
+module.exports = {handler}
